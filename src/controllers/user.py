@@ -1,6 +1,7 @@
 from src.app import app
 from src.config import DBURL
 from pymongo import MongoClient
+from bson.json_util import dumps
 
 
 client = MongoClient(DBURL)
@@ -18,8 +19,15 @@ def collections():
         
 
 @app.route('/user/create/<name>')
-def create_usr():
-    pass
+def create_usr(name):
+    '''
+    Insert a new user and check 
+    that it has been correctly inserted by returning 
+    a find_one. Need to check for repeated users.
+    '''
+    db.users.insert_one({'name':name, 'chats':[]})
+    check = db.users.find_one({'name': name})
+    return dumps(check)
 
 
 

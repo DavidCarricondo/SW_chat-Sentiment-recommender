@@ -1,6 +1,7 @@
 from src.app import app
 from src.config import PORT
 import src.controllers.user
+import src.controllers.chat
 
 
 if __name__ == '__main__':
