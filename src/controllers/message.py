@@ -33,6 +33,7 @@ def add_message(user):
             message = 'We succeded in adding the message and added the user to the chat'
     else: message = 'We succeded in adding the message'
     
+    #Insert the message
     db.messages.insert_one({'chat': id_chat,'user': id_user,'time': str(datetime.datetime.now()),'text': text})
     return {'status': message,
             'entry': dumps(db.messages.find_one({'text':text}))}
@@ -45,7 +46,10 @@ def list_messages(chat):
 
     id_chat = db.chats.find_one({'name':chat},{'_id':1})['_id']
     messages = db.messages.find({'chat':id_chat})
-
-    return dumps(messages)
-
+    result = {}
+    for i,e in enumerate(messages):
+        result[i] = {'name': db.users.find_one({'_id':e['user']},{'_id':0, 'name':1})['name'],
+                    'time': e['time'],
+                    'text':e['text']}
+    return result
 
