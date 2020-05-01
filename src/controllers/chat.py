@@ -47,6 +47,7 @@ def create_chat(name):
 def add_user():
     chat = request.args['chat']
     user = request.args['user']
+    
     cur = db.chats.find({}, {'name':1})
     if chat not in [n['name'] for n in cur]:
         raise APIError ('That chat does not exist, you can create it with the endpoint /chat/create/<chat_name>')
