@@ -35,6 +35,8 @@ def add_message(user):
     
     #Insert the message
     db.messages.insert_one({'chat': id_chat,'user': id_user,'time': str(datetime.datetime.now()),'text': text})
+    db.users.update({'_id': id_user},{'$addToSet': {'chats': id_chat } })
+
     return {'status': message,
             'entry': dumps(db.messages.find_one({'text':text}))}
  

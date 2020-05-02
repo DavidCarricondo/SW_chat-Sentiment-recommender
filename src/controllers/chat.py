@@ -63,6 +63,7 @@ def add_user():
         raise APIError ('That user is already in the chat')
 
     db.chats.update({'_id': id_chat },{'$addToSet': {'participants': id_user } })
+    db.users.update({'_id': id_user },{'$addToSet': {'chats': id_chat } })
     return {'Chat': dumps(db.chats.find_one({'name':chat})),
             'Message': 'We succeded in adding the user'
     }
