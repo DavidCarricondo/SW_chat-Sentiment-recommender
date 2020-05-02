@@ -30,9 +30,15 @@ def create_usr(name):
 @app.route('/user/<name>')
 @errorHandler
 def get_user(name):
-    user = db.users.find_one({'name':name})
+    user = db.users.find_one({'name':name},{'chats':0})
+    chat = db.users.find_one({'name':name},{'chats':1, '_id':0})['chats']
+    
+    chats = []
+    for e in chat:
+        chats.append(db.chats.find_one({'_id': e}, {'name':1, '_id':0})['name'])
     if user:
-            return dumps(user)
+            return {'user' : dumps(user),
+                    'user_chats' : chats}
     else:
         raise APIError ("The user does not exist, you can create it by using the endpoint /user/create/<name>")
   

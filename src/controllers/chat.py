@@ -4,7 +4,9 @@ from pymongo import MongoClient
 from flask import request
 from bson.json_util import dumps
 from src.helpers.errorHandler import APIError, errorHandler
-
+import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from nltk.corpus import stopwords
 
 client = MongoClient(DBURL)
 db = client.get_database()
@@ -34,7 +36,10 @@ def create_chat(name):
         for u in request.args:
             user = request.args[u]
             id = db.users.find_one({'name':user},{'_id':1})['_id']
+            id_chat = db.chats.find_one({'name':name},{'_id':1})['_id']
             db.chats.update({'name': name },{'$addToSet': {'participants': id } })
+            db.users.update({'_id': id },{'$addToSet': {'chats': id_chat } })
+
     check = db.chats.find_one({'name': name})
     return {
         'message': 'We succeded in creating the chat!',
@@ -67,3 +72,16 @@ def add_user():
     return {'Chat': dumps(db.chats.find_one({'name':chat})),
             'Message': 'We succeded in adding the user'
     }
+
+@app.route('/chat/<chat>/sentiment/')
+def sent_ananlysis(chat):
+    sia = SentimentIntensityAnalyzer()
+    stpwrd = set(stopwords.words('english'))
+    chat_id = db.chats.find_one({'name':chat}, {'_id':1})['_id']
+    cur = db.messages.find({'chat':chat_id}, {'text':1, '_id':0})
+    text = ' '.join([e['text'] for e in cur]).split(' ')
+    trimmed = ''
+    for w in text:
+        if w not in stpwrd:
+            trimmed += w + ' '
+    return sia.polarity_scores(trimmed)

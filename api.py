@@ -3,7 +3,7 @@ from src.config import PORT
 import src.controllers.user
 import src.controllers.chat
 import src.controllers.message
-
+import src.controllers.recommender
 
 
 if __name__ == '__main__':
