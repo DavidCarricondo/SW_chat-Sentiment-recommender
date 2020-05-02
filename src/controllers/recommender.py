@@ -1,5 +1,5 @@
 from src.app import app
-from src.helpers.errorHandler import errorHandler
+from src.helpers.errorHandler import errorHandler, APIError
 from sklearn.feature_extraction.text import CountVectorizer
 from src.config import DBURL
 from pymongo import MongoClient
@@ -19,7 +19,13 @@ db = client.get_database()
 @errorHandler
 def recommender(user):
 
+    if not request.args:
+        raise APIError ('This endpoint requires a paramether type= "similar" or type="sentiment"')
+
     type_recom = request.args['type']
+
+    if type_recom not in ['similar', 'sentiment']:
+        raise APIError ('The type parameter must be either "similar" or "sentiment"')
 
     #Create a dictionary with all the messages of each user
     messages = {}
