@@ -8,3 +8,5 @@ import src.controllers.recommender
 
 if __name__ == '__main__':
     app.run('0.0.0.0',PORT, debug=True)
+
+

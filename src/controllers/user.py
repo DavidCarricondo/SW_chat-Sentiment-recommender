@@ -12,6 +12,11 @@ from nltk.corpus import stopwords
 client = MongoClient(DBURL)
 db = client.get_database()
 
+#TEST FUNCITON
+@app.route('/')
+def hello():
+    return 'Hello World'
+
 @app.route('/user/create/<name>')
 @errorHandler
 def create_usr(name):
