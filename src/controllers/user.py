@@ -15,7 +15,7 @@ db = client.get_database()
 #TEST FUNCITON
 @app.route('/')
 def hello():
-    return 'Hello World'
+    return 'Welcome to the chat recommender!'
 
 @app.route('/user/create/<name>')
 @errorHandler
