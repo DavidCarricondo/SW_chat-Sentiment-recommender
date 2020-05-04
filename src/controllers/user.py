@@ -31,7 +31,7 @@ def create_usr(name):
     '''
     db.users.insert_one({'name':name, 'created':str(datetime.datetime.now()), 'chats':[]})
     check = db.users.find_one({'name': name})
-    return dumps(check)
+    return {'result':dumps(check)}
 
 
 @app.route('/user/<name>')
