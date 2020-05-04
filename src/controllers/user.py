@@ -38,16 +38,18 @@ def create_usr(name):
 @errorHandler
 def get_user(name):
     user = db.users.find_one({'name':name},{'chats':0})
-    chat = db.users.find_one({'name':name},{'chats':1, '_id':0})['chats']
+    if user == None:
+        raise APIError ("The user does not exist, you can create it by using the endpoint /user/create/<name>")
     
+    chat = db.users.find_one({'name':name},{'chats':1, '_id':0})['chats']
+
     chats = []
     for e in chat:
         chats.append(db.chats.find_one({'_id': e}, {'name':1, '_id':0})['name'])
-    if user:
-            return {'user' : dumps(user),
-                    'user_chats' : chats}
-    else:
-        raise APIError ("The user does not exist, you can create it by using the endpoint /user/create/<name>")
+        
+    return {'user' : dumps(user),
+            'user_chats' : chats}
+        
 
 @app.route('/user/<name>/sentiment/')
 def sentiment_user(name):

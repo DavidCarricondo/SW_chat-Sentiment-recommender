@@ -103,4 +103,8 @@ A request to this url will return a welcome message to the API.
 
 *   Redefine returns of POST functions as HTML to be more human readable
 
+*   It's possible that with a greater load of messages and users the recommender's calculation takes some time,
+        maybe is a good idea to optimize it taking the calculation of the distance matrix outside of the function. 
+
+        
                            MAY THE 4TH BE WITH YOU
