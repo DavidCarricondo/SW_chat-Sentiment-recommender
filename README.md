@@ -101,6 +101,8 @@ A request to this url will return a welcome message to the API.
 
 *   Refactor functions and add error handlings in some of them.
 
+*   More comments in the functions
+
 *   Redefine returns of POST functions as HTML to be more human readable
 
 *   It's possible that with a greater load of messages and users the recommender's calculation takes some time,
