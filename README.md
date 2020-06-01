@@ -5,9 +5,9 @@
 
 This is an API for data extraction, user recommendation, and sentiment analysis of a chat. The API is deployed as a docker container in a Heroku server using a MongoDB Atlas database in the cloud.
 
-As a homage of the release date (May 4th), the database has been populated with dialogues from Star Wars Episode IV. The the Jupyter notebook `Populating_database.ipynb` describe the steps to populate the database.
+As a homage of the release date (May 4th), the database has been populated with dialogues from Star Wars Episode IV. The Jupyter notebook `Populating_database.ipynb` describes the steps to populate the database.
 
-The Jupyter notebook `API_test.ipynb` is a walkthrough all the endpoints of the API describe below.
+The Jupyter notebook `API_test.ipynb` is a walkthrough for all the endpoints of the API described below.
 
 
 ## Endpoints
